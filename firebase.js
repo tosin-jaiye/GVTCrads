@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { isSupported as isAnalyticsSupported, getAnalytics } from 'firebase/analytics';
@@ -14,13 +14,22 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+// Initialize Firebase only on client-side
+function getFirebaseApp() {
+  if (getApps().length) {
+    return getApps()[0];
+  }
+  return initializeApp(firebaseConfig);
+}
+
+// Only initialize on client-side
+const app = typeof window !== 'undefined' ? getFirebaseApp() : null;
+const db = app ? getFirestore(app) : null;
+const auth = app ? getAuth(app) : null;
 
 // Initialize analytics only on client-side
 const initializeAnalytics = async () => {
-  if (globalThis.window !== undefined) {
+  if (typeof window !== 'undefined' && app) {
     const supported = await isAnalyticsSupported();
     if (supported) {
       return getAnalytics(app);
@@ -29,6 +38,6 @@ const initializeAnalytics = async () => {
   return null;
 };
 
-const analytics = initializeAnalytics();
+const analytics = typeof window !== 'undefined' ? initializeAnalytics() : null;
 
 export { db, auth, analytics };
