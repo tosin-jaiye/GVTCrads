@@ -354,7 +354,7 @@ export default function Home() {
                     Vincent
                   </Typography>
                   <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
-                    Vincent is a key member of our development team, contributing extensively to our project's backend and design elements.
+                    Vincent is a key member of our development team, contributing extensively to our project&apos;s backend and design elements.
                   </Typography>
                 </Box>
               </Grid>
