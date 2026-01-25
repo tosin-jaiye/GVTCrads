@@ -3,10 +3,9 @@
 import { useState } from 'react'
 import { Box, Button, Grid, Typography, AppBar, Toolbar, Container } from '@mui/material'
 import { getAuth, signOut } from 'firebase/auth'
-import { getStripe } from './utils/get-stripe' // Adjust the import based on your file structure
 import { useRouter } from 'next/navigation'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '/firebase' // Adjust this import based on your Firebase configuration
+import { auth } from '/firebase'
 
 export default function Home() {
   const [showLearnMore, setShowLearnMore] = useState(false)
@@ -21,23 +20,6 @@ export default function Home() {
     window.location.href = 'mailto:badewolegoodluck55@gmail.com';
   }
 
-  const handleSubmit = async () => {
-    const checkoutSession = await fetch('/api/checkout_sessions', {
-      method: 'POST',
-      // Removed the headers line for production
-    })
-    const checkoutSessionJson = await checkoutSession.json()
-
-    const stripe = await getStripe()
-    const { error } = await stripe.redirectToCheckout({
-      sessionId: checkoutSessionJson.id,
-    })
-
-    if (error) {
-      console.warn(error.message)
-    }
-  }
-
   const handleSignOut = () => {
     signOut(getAuth())
   }
@@ -46,13 +28,14 @@ export default function Home() {
     <>
       <AppBar position="static">
         <Toolbar>
-          <Typography 
-            variant="h6" 
-            style={{ 
+          <Typography
+            variant="h6"
+            style={{
               flexGrow: 1,
-              background: 'linear-gradient(90deg, orange, blue, red)', 
+              background: 'linear-gradient(90deg, orange, blue, red)',
               WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
+              WebkitTextFillColor: 'transparent',
+              fontWeight: 'bold'
             }}
           >
             GVTCards
@@ -69,89 +52,171 @@ export default function Home() {
           )}
         </Toolbar>
       </AppBar>
-      
-      {/* Welcome Message */}
-      <Box sx={{ textAlign: 'center', my: 4 }}>
-        {!user ? (
-          <>
-            <Typography 
-              variant="h2" 
-              component="h1" 
-              gutterBottom
-              sx={{
-                background: 'linear-gradient(120deg, orange, blue, red)', 
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              Welcome to GVTCards
-            </Typography>
-            <Typography variant="h5" component="h2" gutterBottom>
-              The easiest way to enhance your knowledge from just a simple text.
-            </Typography>
-            <Button variant="contained" color="primary" sx={{ mt: 2, mr: 2 }} href="/generate">
-              Try Demo
-            </Button>
-          </>
-        ) : (
-          <>
-            <Typography 
-              variant="h2" 
-              component="h1" 
-              gutterBottom
-              sx={{
-                background: 'linear-gradient(120deg, orange, blue, red)', 
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              Thank you for choosing GVTCards!
-            </Typography>
-            <Typography variant="h5" component="h2" gutterBottom>
-              We are thrilled to have you back! Dive into your flashcards and continue your learning journey.
-            </Typography>
-            <Button variant="contained" color="primary" sx={{ mt: 2, mr: 2 }} href="/generate">
-              Start Creating
-            </Button>
-          </>
-        )}
-        <Button variant="outlined" color="primary" sx={{ mt: 2 }} onClick={handleLearnMoreClick}>
-          {showLearnMore ? 'Hide' : 'Learn More'}
-        </Button>
-      </Box>
-      
+
+      {/* Hero Section */}
+      <Container maxWidth="lg">
+        <Box
+          sx={{
+            textAlign: 'center',
+            py: 8,
+            px: 3,
+            background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
+            borderRadius: 3,
+            my: 4
+          }}
+        >
+          {!user ? (
+            <>
+              <Typography
+                variant="h2"
+                component="h1"
+                gutterBottom
+                sx={{
+                  background: 'linear-gradient(120deg, orange, blue, red)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  fontWeight: 'bold',
+                  mb: 2
+                }}
+              >
+                Welcome to GVTCards
+              </Typography>
+              <Typography
+                variant="h5"
+                component="h2"
+                gutterBottom
+                sx={{
+                  color: 'text.secondary',
+                  mb: 4,
+                  maxWidth: '800px',
+                  mx: 'auto',
+                  lineHeight: 1.6
+                }}
+              >
+                The easiest way to enhance your knowledge from just a simple text.
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  href="/generate"
+                  sx={{
+                    background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
+                    px: 4,
+                    py: 1.5,
+                    fontSize: '1.1rem',
+                    '&:hover': {
+                      background: 'linear-gradient(90deg, #764ba2 0%, #667eea 100%)',
+                    }
+                  }}
+                >
+                  Try Demo
+                </Button>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  onClick={handleLearnMoreClick}
+                  sx={{ px: 4, py: 1.5, fontSize: '1.1rem' }}
+                >
+                  {showLearnMore ? 'Hide Details' : 'Learn More'}
+                </Button>
+              </Box>
+            </>
+          ) : (
+            <>
+              <Typography
+                variant="h2"
+                component="h1"
+                gutterBottom
+                sx={{
+                  background: 'linear-gradient(120deg, orange, blue, red)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  fontWeight: 'bold',
+                  mb: 2
+                }}
+              >
+                Thank you for choosing GVTCards!
+              </Typography>
+              <Typography
+                variant="h5"
+                component="h2"
+                gutterBottom
+                sx={{
+                  color: 'text.secondary',
+                  mb: 4,
+                  maxWidth: '800px',
+                  mx: 'auto',
+                  lineHeight: 1.6
+                }}
+              >
+                We are thrilled to have you back! Dive into your flashcards and continue your learning journey.
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  href="/generate"
+                  sx={{
+                    background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
+                    px: 4,
+                    py: 1.5,
+                    fontSize: '1.1rem',
+                    '&:hover': {
+                      background: 'linear-gradient(90deg, #764ba2 0%, #667eea 100%)',
+                    }
+                  }}
+                >
+                  Start Creating
+                </Button>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  onClick={handleLearnMoreClick}
+                  sx={{ px: 4, py: 1.5, fontSize: '1.1rem' }}
+                >
+                  {showLearnMore ? 'Hide Details' : 'Learn More'}
+                </Button>
+              </Box>
+            </>
+          )}
+        </Box>
+      </Container>
+
       {/* Learn More Section */}
       {showLearnMore && (
         <Container maxWidth="md">
           <Box sx={{ my: 6, textAlign: 'center' }}>
             {!user ? (
               <>
-                <Typography variant="h4" component="h2" gutterBottom>Learn More</Typography>
-                <Typography variant="body1" sx={{ mb: 4 }}>
+                <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
+                  Learn More
+                </Typography>
+                <Typography variant="body1" sx={{ mb: 4, fontSize: '1.1rem', lineHeight: 1.8 }}>
                   GVTCards is designed to simplify the process of learning by allowing users to quickly
                   generate flashcards from their study materials. Whether you are a student preparing
-                  for exams, a professional brushing up on skills, or just someone who loves learning, 
+                  for exams, a professional brushing up on skills, or just someone who loves learning,
                   GVTCards offers a seamless experience to create, organize, and review flashcards.
                   With our intuitive design, you can easily input your content, generate flashcards,
                   and access them anytime, anywhere.
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 4 }}>
-                  The Pro version offers additional features such as cloud storage, advanced formatting
-                  options, and the ability to share your flashcard sets with others. Upgrade now to
-                  enhance your learning experience!
+                <Typography variant="body1" sx={{ mb: 4, fontSize: '1.1rem', lineHeight: 1.8 }}>
+                  Enjoy free access to all features including cloud storage, AI-powered flashcard generation,
+                  and the ability to share your flashcard sets with others. Start learning smarter today!
                 </Typography>
               </>
             ) : (
               <>
-                <Typography variant="h4" component="h2" gutterBottom>Welcome Back!</Typography>
-                <Typography variant="body1" sx={{ mb: 4 }}>
-                  As a valued member, you are already enjoying the benefits of GVTCards. Explore new features, 
-                  and maximize your productivity with our Pro options. Discover more about the Pro version 
-                  to get the most out of your experience!
+                <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
+                  Welcome Back!
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 4 }}>
-                  Your Pro features include enhanced customization options, cloud storage, and more. If you have not 
-                  checked out these features yet, now is the perfect time to dive in and see how they can benefit you.
+                <Typography variant="body1" sx={{ mb: 4, fontSize: '1.1rem', lineHeight: 1.8 }}>
+                  As a valued member, you are already enjoying all the benefits of GVTCards. Explore features,
+                  and maximize your productivity with AI-powered flashcard generation!
+                </Typography>
+                <Typography variant="body1" sx={{ mb: 4, fontSize: '1.1rem', lineHeight: 1.8 }}>
+                  Your features include enhanced customization options, cloud storage, and seamless organization.
+                  Start creating flashcards and enhance your learning experience today!
                 </Typography>
               </>
             )}
@@ -160,70 +225,80 @@ export default function Home() {
       )}
 
       {/* Features Section */}
-      <Container maxWidth="md">
-        <Box sx={{ my: 6, textAlign: 'center' }}>
-          <Typography variant="h4" component="h2" gutterBottom>Features</Typography>
+      <Container maxWidth="lg">
+        <Box sx={{ my: 8, textAlign: 'center' }}>
+          <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 5 }}>
+            Features
+          </Typography>
           <Grid container spacing={4} justifyContent="center">
-            {/* Feature items */}
             <Grid item xs={12} sm={6} md={4}>
               <Box sx={{
-                padding: 2,
-                border: '1px solid',
+                padding: 4,
+                border: '2px solid',
                 borderColor: 'primary.main',
-                borderRadius: 2,
+                borderRadius: 3,
                 textAlign: 'center',
-                transition: 'transform 0.3s, box-shadow 0.3s',
+                height: '100%',
+                transition: 'all 0.3s ease',
+                background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)',
                 '&:hover': {
-                  transform: 'scale(1.05)',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                  transform: 'translateY(-8px)',
+                  boxShadow: '0 12px 24px rgba(102, 126, 234, 0.3)',
+                  borderColor: '#667eea',
                 },
               }}>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
                   Easy Flashcard Creation
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ fontSize: '1rem', lineHeight: 1.7 }}>
                   Quickly create flashcards by inputting your text, and GVTCards will handle the rest.
                 </Typography>
               </Box>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <Box sx={{
-                padding: 2,
-                border: '1px solid',
+                padding: 4,
+                border: '2px solid',
                 borderColor: 'primary.main',
-                borderRadius: 2,
+                borderRadius: 3,
                 textAlign: 'center',
-                transition: 'transform 0.3s, box-shadow 0.3s',
+                height: '100%',
+                transition: 'all 0.3s ease',
+                background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)',
                 '&:hover': {
-                  transform: 'scale(1.05)',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                  transform: 'translateY(-8px)',
+                  boxShadow: '0 12px 24px rgba(102, 126, 234, 0.3)',
+                  borderColor: '#667eea',
                 },
               }}>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
                   Organized Sets
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ fontSize: '1rem', lineHeight: 1.7 }}>
                   Keep your flashcards organized with easy-to-manage sets and categories.
                 </Typography>
               </Box>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <Box sx={{
-                padding: 2,
-                border: '1px solid',
+                padding: 4,
+                border: '2px solid',
                 borderColor: 'primary.main',
-                borderRadius: 2,
+                borderRadius: 3,
                 textAlign: 'center',
-                transition: 'transform 0.3s, box-shadow 0.3s',
+                height: '100%',
+                transition: 'all 0.3s ease',
+                background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)',
                 '&:hover': {
-                  transform: 'scale(1.05)',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                  transform: 'translateY(-8px)',
+                  boxShadow: '0 12px 24px rgba(102, 126, 234, 0.3)',
+                  borderColor: '#667eea',
                 },
               }}>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
                   Accessible Anywhere
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ fontSize: '1rem', lineHeight: 1.7 }}>
                   Access your flashcards from any device, ensuring you are always prepared.
                 </Typography>
               </Box>
@@ -231,127 +306,113 @@ export default function Home() {
           </Grid>
         </Box>
       </Container>
-      
+
       {/* Meet Our Amazing Team Section */}
       {!user && (
-        <Container maxWidth="md">
-        <Box sx={{ my: 6, textAlign: 'center' }}>
-          <Typography variant="h4" component="h2" gutterBottom>Meet Our Amazing Team</Typography>
-          <Grid container spacing={4} justifyContent="center">
-            <Grid item xs={12} sm={6} md={4}>
-              <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="h6" sx={{ mb: 2 }}>Goodluck Badewole</Typography>
-                <Typography variant="body1">
-                  An International Student hailing from Nigeria. Current sophomore studying at AAMU with a major in Computer Science. 
-                  Goodluck is aspiring to become a data analyst.
-                </Typography>
-              </Box>
+        <Container maxWidth="lg">
+          <Box sx={{ my: 8, textAlign: 'center', py: 6, background: 'linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%)', borderRadius: 3 }}>
+            <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 5 }}>
+              Meet Our Amazing Team
+            </Typography>
+            <Grid container spacing={4} justifyContent="center">
+              <Grid item xs={12} sm={6} md={4}>
+                <Box sx={{
+                  textAlign: 'center',
+                  p: 3,
+                  borderRadius: 2,
+                  background: 'white',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  transition: 'transform 0.3s',
+                  height: '100%',
+                  '&:hover': {
+                    transform: 'scale(1.05)',
+                  }
+                }}>
+                  <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold', color: '#667eea' }}>
+                    Goodluck Badewole
+                  </Typography>
+                  <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
+                    An International Student hailing from Nigeria. Current sophomore studying at AAMU with a major in Computer Science.
+                    Goodluck is aspiring to become a data analyst.
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Box sx={{
+                  textAlign: 'center',
+                  p: 3,
+                  borderRadius: 2,
+                  background: 'white',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  transition: 'transform 0.3s',
+                  height: '100%',
+                  '&:hover': {
+                    transform: 'scale(1.05)',
+                  }
+                }}>
+                  <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold', color: '#667eea' }}>
+                    Vincent
+                  </Typography>
+                  <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
+                    Vincent is a key member of our development team, contributing extensively to our project's backend and design elements.
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Box sx={{
+                  textAlign: 'center',
+                  p: 3,
+                  borderRadius: 2,
+                  background: 'white',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  transition: 'transform 0.3s',
+                  height: '100%',
+                  '&:hover': {
+                    transform: 'scale(1.05)',
+                  }
+                }}>
+                  <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold', color: '#667eea' }}>
+                    Tapiwa
+                  </Typography>
+                  <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
+                    Tapiwa specializes in user experience and is responsible for ensuring our platform is both functional and user-friendly.
+                  </Typography>
+                </Box>
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="h6" sx={{ mb: 2 }}>Vincent</Typography>
-                <Typography variant="body1">
-                  Vincent is a key member of our development team, contributing extensively to our project’s backend and design elements.
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="h6" sx={{ mb: 2 }}>Tapiwa</Typography>
-                <Typography variant="body1">
-                  Tapiwa specializes in user experience and is responsible for ensuring our platform is both functional and user-friendly.
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-      </Container>
+          </Box>
+        </Container>
       )}
 
-      {/* Pricing Section */}
-      {user && (
-        <Container maxWidth="md">
-        <Box sx={{ my: 6, textAlign: 'center' }}>
-          <Typography variant="h4" component="h2" gutterBottom>Pricing</Typography>
-          <Grid container spacing={4} justifyContent="center">
-            {/* Pricing plans */}
-            <Grid item xs={12} sm={6} md={4}>
-              <Box sx={{
-                padding: 2,
-                border: '1px solid',
-                borderColor: 'primary.main',
-                borderRadius: 2,
-                textAlign: 'center',
-                transition: 'transform 0.3s, box-shadow 0.3s',
-                '&:hover': {
-                  transform: 'scale(1.05)',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                },
-              }}>
-                <Typography variant="h5" gutterBottom>Basic Plan</Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>
-                  Free access to core features. Create and manage basic flashcards with ease.
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Box sx={{
-                padding: 2,
-                border: '1px solid',
-                borderColor: 'primary.main',
-                borderRadius: 2,
-                textAlign: 'center',
-                transition: 'transform 0.3s, box-shadow 0.3s',
-                '&:hover': {
-                  transform: 'scale(1.05)',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                },
-              }}>
-                <Typography variant="h5" gutterBottom>Pro Plan</Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>
-                  $9.99/month. Includes cloud storage, advanced formatting options, and more.
-                </Typography>
-                <Button variant="contained" color="primary" onClick={handleSubmit}>
-                  Upgrade to Pro
-                </Button>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Box sx={{
-                padding: 2,
-                border: '1px solid',
-                borderColor: 'primary.main',
-                borderRadius: 2,
-                textAlign: 'center',
-                transition: 'transform 0.3s, box-shadow 0.3s',
-                '&:hover': {
-                  transform: 'scale(1.05)',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                },
-              }}>
-                <Typography variant="h5" gutterBottom>Enterprise Plan</Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>
-                  Custom pricing for organizations. Includes additional features and team management.
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-      </Container>
-      )}
-      
       {/* Contact Us Section */}
       <Container maxWidth="md">
-        <Box sx={{ my: 6, textAlign: 'center' }}>
-          <Typography variant="h4" component="h2" gutterBottom>Contact Us</Typography>
-          <Typography variant="body1" sx={{ mb: 4 }}>
+        <Box sx={{ my: 8, textAlign: 'center', py: 6, background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)', borderRadius: 3 }}>
+          <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
+            Contact Us
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 4, fontSize: '1.1rem', lineHeight: 1.8 }}>
             Have questions or need support? Reach out to us via email and we will get back to you as soon as possible.
           </Typography>
-          <Button variant="contained" color="primary" onClick={handleContactUs}>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={handleContactUs}
+            sx={{
+              px: 5,
+              py: 1.5,
+              fontSize: '1.1rem',
+              background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
+              '&:hover': {
+                background: 'linear-gradient(90deg, #764ba2 0%, #667eea 100%)',
+              }
+            }}
+          >
             Email Us
           </Button>
         </Box>
       </Container>
+
+      <Box sx={{ pb: 4 }} />
     </>
   )
 }

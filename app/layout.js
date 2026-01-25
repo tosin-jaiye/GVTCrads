@@ -1,21 +1,30 @@
-'use client';  // Ensure this is present
+import { Inter } from 'next/font/google'
 
-import { ClerkProvider } from '@clerk/nextjs';
-import React from 'react';
+const inter = Inter({ subsets: ['latin'] })
 
-const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-console.log('NEXT_PUBLIC_CLERK_FRONTEND_API:', process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+export const metadata = {
+  title: 'GVTCards - AI-Powered Flashcard Generator',
+  description: 'The easiest way to enhance your knowledge from just a simple text. Create AI-powered flashcards instantly with GVTCards.',
+  keywords: ['flashcards', 'AI', 'learning', 'education', 'study', 'OpenAI', 'SaaS'],
+  authors: [{ name: 'GVT Team' }],
+  openGraph: {
+    title: 'GVTCards - AI-Powered Flashcard Generator',
+    description: 'The easiest way to enhance your knowledge from just a simple text.',
+    type: 'website',
+  },
+}
 
-
-
+/**
+ * Root layout component for the application
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Child components to render
+ */
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider frontendApi={clerkFrontendApi}>
-      <html>
-        <body>
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={inter.className}>
+        {children}
+      </body>
+    </html>
   );
 }
