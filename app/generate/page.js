@@ -26,6 +26,9 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { doc, collection, setDoc, query, where, getDocs } from 'firebase/firestore'
 import { db } from '../../firebase'
 
+// Disable static generation for this page since it uses Firebase
+export const dynamic = 'force-dynamic'
+
 export default function Generate() {
   const [text, setText] = useState('')
   const [flashcards, setFlashcards] = useState([])

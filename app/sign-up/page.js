@@ -18,6 +18,9 @@ import { auth } from '../../firebase';
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
 
+// Disable static generation for this page since it uses Firebase auth
+export const dynamic = 'force-dynamic'
+
 export default function SignUpPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

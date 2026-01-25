@@ -7,6 +7,9 @@ import { useRouter } from 'next/navigation'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '/firebase'
 
+// Disable static generation for this page since it uses Firebase auth
+export const dynamic = 'force-dynamic'
+
 export default function Home() {
   const [showLearnMore, setShowLearnMore] = useState(false)
   const [user, loading, error] = useAuthState(auth)
