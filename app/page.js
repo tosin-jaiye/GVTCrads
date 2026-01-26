@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Box, Button, Grid, Typography, AppBar, Toolbar, Container } from '@mui/material'
 import { getAuth, signOut } from 'firebase/auth'
 import { useRouter } from 'next/navigation'
@@ -12,8 +12,14 @@ export const dynamic = 'force-dynamic'
 
 export default function Home() {
   const [showLearnMore, setShowLearnMore] = useState(false)
-  const [user, loading, error] = useAuthState(auth)
+  const [mounted, setMounted] = useState(false)
+  const [user, loading] = useAuthState(auth)
   const router = useRouter()
+
+  // Only render after mounting on client
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const handleLearnMoreClick = () => {
     setShowLearnMore(!showLearnMore)
@@ -25,6 +31,11 @@ export default function Home() {
 
   const handleSignOut = () => {
     signOut(getAuth())
+  }
+
+  // Don't render until mounted on client to avoid SSR issues
+  if (!mounted) {
+    return null
   }
 
   return (
