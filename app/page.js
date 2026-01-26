@@ -10,16 +10,9 @@ import { auth } from '/firebase'
 // Disable static generation for this page since it uses Firebase auth
 export const dynamic = 'force-dynamic'
 
-export default function Home() {
+function HomeContent() {
   const [showLearnMore, setShowLearnMore] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const [user, loading] = useAuthState(auth)
-  const router = useRouter()
-
-  // Only render after mounting on client
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const [user] = useAuthState(auth)
 
   const handleLearnMoreClick = () => {
     setShowLearnMore(!showLearnMore)
@@ -31,11 +24,6 @@ export default function Home() {
 
   const handleSignOut = () => {
     signOut(getAuth())
-  }
-
-  // Don't render until mounted on client to avoid SSR issues
-  if (!mounted) {
-    return null
   }
 
   return (
@@ -429,4 +417,19 @@ export default function Home() {
       <Box sx={{ pb: 4 }} />
     </>
   )
+}
+
+export default function Home() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Don't render until mounted on client to avoid SSR issues with Firebase auth
+  if (!mounted) {
+    return null
+  }
+
+  return <HomeContent />
 }
