@@ -8,7 +8,7 @@
   [![Firebase](https://img.shields.io/badge/Firebase-10.13.1-orange?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
   [![OpenAI](https://img.shields.io/badge/OpenAI-API-412991?style=for-the-badge&logo=openai)](https://openai.com/)
 
-  [Live Demo](https://github.com/Goodluck07/GVTCrads) • [Report Bug](https://github.com/Goodluck07/GVTCrads/issues) • [Request Feature](https://github.com/Goodluck07/GVTCrads/issues)
+  [Live Demo](https://gvtcards.vercel.app/) • [Report Bug](https://github.com/Goodluck07/GVTCrads/issues) • [Request Feature](https://github.com/Goodluck07/GVTCrads/issues)
 
 </div>
 
