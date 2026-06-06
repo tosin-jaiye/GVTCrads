@@ -8,7 +8,7 @@
   [![Firebase](https://img.shields.io/badge/Firebase-10.13.1-orange?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
   [![OpenAI](https://img.shields.io/badge/OpenAI-API-412991?style=for-the-badge&logo=openai)](https://openai.com/)
 
-  [Live Demo](https://gvtcards.vercel.app/) • [Report Bug](https://github.com/Goodluck07/GVTCrads/issues) • [Request Feature](https://github.com/Goodluck07/GVTCrads/issues)
+  [Live Demo](https://gvtcards.vercel.app/) • [Report Bug](https://github.com/tosin-jaiye/GVTCrads/issues) • [Request Feature](https://github.com/tosin-jaiye/GVTCrads/issues)
 
 </div>
 
@@ -47,7 +47,7 @@ Before you begin, ensure you have the following installed:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Goodluck07/GVTCrads.git
+   git clone https://github.com/tosin-jaiye/GVTCrads.git
    cd GVTCrads
    ```
 
@@ -189,7 +189,7 @@ GVTCrads/
 <table>
   <tr>
     <td align="center">
-      <h3>Goodluck Badewole</h3>
+      <h3>Tosin Badewole</h3>
       <p>An international student from Nigeria, currently a sophomore studying Computer Science at AAMU. Aspiring data analyst with a passion for educational technology.</p>
     </td>
   </tr>
@@ -211,7 +211,7 @@ GVTCrads/
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/Goodluck07/GVTCrads/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/tosin-jaiye/GVTCrads/issues).
 
 ### How to Contribute
 
@@ -231,9 +231,9 @@ This project is currently unlicensed. All rights reserved.
 
 ## 📧 Contact
 
-**Goodluck Badewole** - [badewolegoodluck55@gmail.com](mailto:badewolegoodluck55@gmail.com)
+**Tosin Badewole** - [badewoletosin55@gmail.com](mailto:badewoletosin55@gmail.com)
 
-**Project Link**: [https://github.com/Goodluck07/GVTCrads](https://github.com/Goodluck07/GVTCrads)
+**Project Link**: [https://github.com/tosin-jaiye/GVTCrads](https://github.com/tosin-jaiye/GVTCrads)
 
 ---
 
